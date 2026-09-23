@@ -43,8 +43,6 @@ venv\Scripts\Activate.ps1        # Windows
 pip install -r requirements.txt
 ```
 
-GPU (CUDA) strongly recommended for training. Verify PyTorch sees your GPU before running
-anything:
 ```bash
 python -c "import torch; print(torch.cuda.is_available())"
 ```

@@ -4,11 +4,6 @@ Writer-independent offline signature verification using a Siamese CNN, stress-te
 realistic bank deployment conditions: low enrollment sample counts, degraded image capture,
 and generalization to scripts never seen in training.
 
-An earlier classical-ML baseline (HOG features + Logistic Regression/KNN/SVM/Random Forest)
-reported 98.9% accuracy on CEDAR, but used a writer-dependent evaluation split, inflating the
-result. This project rebuilds the pipeline around a writer-disjoint evaluation and a
-Siamese/metric-learning architecture that actually generalizes to unseen writers.
-
 ## Results summary
 
 | Experiment | Result |

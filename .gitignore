@@ -1,0 +1,7 @@
+venv/
+__pycache__/
+*.pyc
+*.onnx
+*.pth
+data/
+metadata/folds/

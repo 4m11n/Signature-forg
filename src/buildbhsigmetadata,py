@@ -1,0 +1,45 @@
+import os
+import re
+import pandas as pd
+
+def build_bhsig_metadata(root_dir, script_label):
+    records = []
+    pattern = re.compile(r'[BH]-S-(\d+)-([GF])-(\d+)\.tif', re.IGNORECASE)
+
+    for dirpath, _, filenames in os.walk(root_dir):
+        for fname in filenames:
+            m = pattern.match(fname)
+            if not m:
+                continue
+            writer_id, kind, sample_id = m.groups()
+            label = "genuine" if kind.upper() == "G" else "forged"
+            records.append({
+                "writer_id": int(writer_id),
+                "sample_id": int(sample_id),
+                "label": label,
+                "script": script_label,
+                "filepath": os.path.join(dirpath, fname),
+            })
+
+    df = pd.DataFrame(records)
+    assert len(df) > 0, f"No files matched for {script_label} — check pattern against actual filenames."
+    return df
+
+if __name__ == "__main__":
+    bengali_root = r"C:\Users\arfan\OneDrive\Desktop\forgery\data\bhsig260\Reconstructed_BHSig100-20250403T193101Z-001\Reconstructed_BHSig100"
+    hindi_root = r"C:\Users\arfan\OneDrive\Desktop\forgery\data\bhsig260\Reconstructed_BHSig160-20250403T183033Z-001\Reconstructed_BHSig160"
+
+    bengali_df = build_bhsig_metadata(bengali_root, "bengali")
+    hindi_df = build_bhsig_metadata(hindi_root, "hindi")
+
+    print("Bengali:")
+    print(bengali_df.groupby(["writer_id", "label"]).size().unstack())
+    print(f"Bengali writers: {bengali_df.writer_id.nunique()}, samples: {len(bengali_df)}")
+
+    print("\nHindi:")
+    print(hindi_df.groupby(["writer_id", "label"]).size().unstack())
+    print(f"Hindi writers: {hindi_df.writer_id.nunique()}, samples: {len(hindi_df)}")
+
+    combined = pd.concat([bengali_df, hindi_df], ignore_index=True)
+    combined.to_csv("metadata/bhsig260_metadata.csv", index=False)
+    print(f"\nSaved metadata/bhsig260_metadata.csv — total {len(combined)} samples")

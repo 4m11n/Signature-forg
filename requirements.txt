@@ -1,0 +1,7 @@
+torch
+torchvision
+albumentations
+opencv-python
+pandas
+scikit-learn
+Pillow

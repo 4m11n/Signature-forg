@@ -5,3 +5,5 @@ opencv-python
 pandas
 scikit-learn
 Pillow
+onnxscript
+matplotlib

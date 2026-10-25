@@ -6,10 +6,7 @@ generalization to scripts never seen in training. Two models are compared on ide
 folds, pairs and seeds: a Siamese CNN on grayscale pixels and a Siamese GNN on a graph of
 stroke points (EdgeConv), plus a binarized-CNN control.
 
-An earlier classical-ML baseline (HOG features + Logistic Regression/KNN/SVM/Random Forest)
-reported 98.9% accuracy on CEDAR, but used a writer-dependent evaluation split, inflating the
-result. This project rebuilds the pipeline around a writer-disjoint evaluation and a
-Siamese/metric-learning architecture that actually generalizes to unseen writers.
+
 
 ## Results summary
 
